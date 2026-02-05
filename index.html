@@ -1,1 +1,377 @@
 <!-- INDEX -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Python Справочник — основы</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f6fb;
+      --card: #ffffff;
+      --text: #1f2340;
+      --muted: #6a6f8a;
+      --accent: #4c6fff;
+      --accent-2: #9f7bff;
+      --accent-3: #2dd4bf;
+      --radius: 24px;
+      --shadow: 0 18px 45px rgba(25, 32, 68, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #edf0ff 0%, var(--bg) 55%, #eefcf9 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 48px 6vw 28px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: rgba(76, 111, 255, 0.12);
+      color: var(--accent);
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      width: fit-content;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw + 1.2rem, 3.8rem);
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 720px;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, rgba(76, 111, 255, 0.12), rgba(159, 123, 255, 0.15));
+      padding: 24px 28px;
+      border-radius: var(--radius);
+      display: grid;
+      gap: 10px;
+      max-width: 760px;
+    }
+
+    main {
+      padding: 0 6vw 64px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search {
+      flex: 1 1 240px;
+      min-width: 220px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .search input {
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      width: 100%;
+      font-family: inherit;
+      color: var(--text);
+      background: transparent;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      border: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(76, 111, 255, 0.12);
+      color: var(--accent);
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(76, 111, 255, 0.18), transparent 70%);
+      top: -40px;
+      right: -30px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(45, 212, 191, 0.15);
+      color: #0f766e;
+      width: fit-content;
+    }
+
+    .code {
+      background: #1f2340;
+      color: #f8f8ff;
+      padding: 14px 16px;
+      border-radius: 18px;
+      font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+    }
+
+    footer {
+      padding: 20px 6vw 40px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-note {
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding-top: 36px;
+      }
+
+      .hero-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="badge">🐍 Python • База знаний</span>
+    <h1>Короткий справочник по Python</h1>
+    <p class="subtitle">
+      Мини‑энциклопедия, которая быстро напоминает основы синтаксиса, практики и подходы.
+      Добавляйте новые карточки в массив <strong>topics</strong> прямо в коде.
+    </p>
+    <div class="hero-card">
+      <strong>Как пополнить справочник?</strong>
+      <p>Откройте файл <code>index.html</code>, найдите массив <code>topics</code> внизу и добавьте новый объект с названием, описанием и примером кода.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="toolbar">
+      <label class="search">
+        🔍
+        <input id="searchInput" type="text" placeholder="Поиск по темам..." />
+      </label>
+      <div class="filters" id="filters"></div>
+    </section>
+
+    <section class="grid" id="cards"></section>
+  </main>
+
+  <footer>
+    <div class="footer-note">Сделано с любовью к чистому синтаксису ✨</div>
+    <div>Обновление: <span id="totalCount"></span> тем</div>
+  </footer>
+
+  <script>
+    const topics = [
+      {
+        title: "Переменные и типы",
+        category: "Основы",
+        description: "Python не требует объявлять тип заранее — он определяется автоматически при присваивании.",
+        code: "name = 'Ada'\nage = 26\nheight = 1.72",
+      },
+      {
+        title: "Условия",
+        category: "Основы",
+        description: "Используйте if/elif/else для выбора действия. Отступы обязательны!",
+        code: "if score > 90:\n    grade = 'A'\nelif score > 75:\n    grade = 'B'\nelse:\n    grade = 'C'",
+      },
+      {
+        title: "Цикл for",
+        category: "Основы",
+        description: "for проходит по элементам последовательности, не требуя индекса.",
+        code: "for city in ['Paris', 'Tokyo', 'Rio']:\n    print(city)",
+      },
+      {
+        title: "Функции",
+        category: "Структура",
+        description: "Функции помогают переиспользовать код. Указывайте параметры и возвращайте результат.",
+        code: "def greet(name):\n    return f'Привет, {name}!'\n\nmessage = greet('Мира')",
+      },
+      {
+        title: "Списковые выражения",
+        category: "Структура",
+        description: "Компактный способ создать список с фильтром или трансформацией.",
+        code: "squares = [n ** 2 for n in range(6) if n % 2 == 0]",
+      },
+      {
+        title: "Словари",
+        category: "Структура",
+        description: "Ключ-значение. Быстрый доступ к данным по ключу.",
+        code: "profile = {'name': 'Lin', 'role': 'Data Analyst'}\nprofile['role']",
+      },
+      {
+        title: "Работа с файлами",
+        category: "Практика",
+        description: "Используйте with, чтобы файл закрывался автоматически после чтения/записи.",
+        code: "with open('notes.txt', 'w', encoding='utf-8') as file:\n    file.write('Hello!')",
+      },
+      {
+        title: "Исключения",
+        category: "Практика",
+        description: "try/except помогают обработать ошибки и сохранить контроль над потоком выполнения.",
+        code: "try:\n    total = 10 / 0\nexcept ZeroDivisionError:\n    total = 0",
+      },
+      {
+        title: "Модули",
+        category: "Экосистема",
+        description: "Импортируйте стандартные библиотеки или свои модули для расширения функциональности.",
+        code: "import datetime\nprint(datetime.date.today())",
+      },
+      {
+        title: "Советы по стилю",
+        category: "Экосистема",
+        description: "PEP 8 — руководство по стилю. Используйте понятные имена и отступы в 4 пробела.",
+        code: "def calculate_area(radius):\n    return 3.14 * radius ** 2",
+      },
+    ];
+
+    const cardsContainer = document.getElementById("cards");
+    const filtersContainer = document.getElementById("filters");
+    const searchInput = document.getElementById("searchInput");
+    const totalCount = document.getElementById("totalCount");
+
+    const uniqueCategories = ["Все", ...new Set(topics.map((topic) => topic.category))];
+    let activeCategory = "Все";
+
+    const renderFilters = () => {
+      filtersContainer.innerHTML = "";
+      uniqueCategories.forEach((category) => {
+        const button = document.createElement("button");
+        button.className = `filter-btn${category === activeCategory ? " active" : ""}`;
+        button.textContent = category;
+        button.addEventListener("click", () => {
+          activeCategory = category;
+          renderFilters();
+          renderCards();
+        });
+        filtersContainer.appendChild(button);
+      });
+    };
+
+    const renderCards = () => {
+      const query = searchInput.value.trim().toLowerCase();
+      const filtered = topics.filter((topic) => {
+        const matchesCategory = activeCategory === "Все" || topic.category === activeCategory;
+        const matchesQuery = [topic.title, topic.description, topic.category]
+          .join(" ")
+          .toLowerCase()
+          .includes(query);
+        return matchesCategory && matchesQuery;
+      });
+
+      cardsContainer.innerHTML = "";
+      filtered.forEach((topic) => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <span class="chip">${topic.category}</span>
+          <h3>${topic.title}</h3>
+          <p>${topic.description}</p>
+          <pre class="code"><code>${topic.code}</code></pre>
+        `;
+        cardsContainer.appendChild(card);
+      });
+
+      totalCount.textContent = `${filtered.length} из ${topics.length}`;
+    };
+
+    searchInput.addEventListener("input", renderCards);
+
+    renderFilters();
+    renderCards();
+  </script>
+</body>
+</html>
